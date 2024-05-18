@@ -2,13 +2,9 @@
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  display: inline-block;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  margin-left: 50%;
   border: 3px solid;
-  border-color: black black transparent transparent;
+  border-color: rgb(237, 226, 226) rgb(237, 226, 226) transparent transparent;
   box-sizing: border-box;
   animation: rotation 1s linear infinite;
 }
@@ -28,7 +24,7 @@
   bottom: 0;
   margin: auto;
   border: 3px solid;
-  border-color: transparent transparent #0040ff #0026ff;
+  border-color: transparent transparent #ff0000 #ff0000;
   width: 40px;
   height: 40px;
   border-radius: 50%;

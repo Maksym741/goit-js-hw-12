@@ -1,5 +1,4 @@
 //main
-
 import SimpleLightbox from 'simplelightbox';
 import iziToast from 'izitoast';
 import { createMarkup } from './js/render-functions';
@@ -61,7 +60,6 @@ async function fetchAndRenderPhotos() {
 
     loadMoreBtn.classList.remove('is-hidden');
   } catch (error) {
-    console.log(error);
     iziToast.error({
       position: 'topRight',
       timeout: 2000,
@@ -69,6 +67,7 @@ async function fetchAndRenderPhotos() {
     });
   } finally {
     loaderEl.classList.add('is-hidden');
+    loadMoreBtn.classList.remove('is-hidden');
   }
 }
 
@@ -103,6 +102,7 @@ async function onLoadMore() {
       message: "We're sorry, there are no more posts to load",
     });
   }
+  loadMoreBtn.classList.add('is-hidden');
   loaderEl.classList.remove('is-hidden');
   await fetchAndRenderPhotos();
 }
