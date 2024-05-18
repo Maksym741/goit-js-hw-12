@@ -1,8 +1,7 @@
 /* styles */
 @import url('./loader.css');
 @import url('./reset.css');
-@import 'izitoast/dist/css/iziToast.min.css';
-@import 'simplelightbox/dist/simple-lightbox.min.css';
+
 .search-form {
   display: flex;
   justify-content: center;
@@ -36,13 +35,14 @@
 }
 .gallery {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 20px;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 10px;
   max-width: 70%;
   list-style: none;
   margin: 0 auto;
+  justify-content: center;
+  padding-bottom: 20px;
 }
-
 .basicLightbox {
   display: flex;
   justify-content: center;
@@ -68,13 +68,31 @@
 .info {
   display: flex;
   justify-content: center;
-  gap: 28px;
+  gap: 15px;
 }
 .photo-container {
   border: 1px solid #808080;
-  max-width: 360px;
+  max-width: 280px;
 }
 .photo {
-  height: 200px;
-  width: 360px;
+  height: 176px;
+  width: 280px;
+}
+.btn-bottom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  background-color: dodgerblue;
+  border-radius: 4px;
+  border: none;
+  height: 30px;
+  width: 100px;
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.btn-bottom:hover {
+  background-color: blue;
+}
+.is-hidden {
+  display: none;
 }
