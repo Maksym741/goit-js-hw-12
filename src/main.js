@@ -1,4 +1,5 @@
 //main
+
 import SimpleLightbox from 'simplelightbox';
 import iziToast from 'izitoast';
 import { createMarkup } from './js/render-functions';
@@ -16,11 +17,13 @@ const loadMoreBtn = document.querySelector('.btn');
 let searchQuery = '';
 let page = 1;
 let limit = 15;
+let totalPages = 0;
 let lightbox = null;
 
 async function fetchAndRenderPhotos() {
   try {
     const imagesData = await fetchPhotos(searchQuery, page);
+    totalPages = Math.ceil(imagesData.totalHits / limit); // Оновлюємо totalPages на основі загальної кількості результатів
 
     if (imagesData.hits.length === 0 && page === 1) {
       iziToast.error({
@@ -30,11 +33,12 @@ async function fetchAndRenderPhotos() {
           'Sorry, there are no images matching your search query. Please try again!',
       });
       loadMoreBtn.classList.add('is-hidden');
+      loaderEl.classList.add('is-hidden');
       return;
     }
 
     const initialHeight = imgContainer.getBoundingClientRect().height;
-    imgContainer.innerHTML += createMarkup(imagesData.hits);
+    imgContainer.insertAdjacentHTML('beforeend', createMarkup(imagesData.hits));
     const newHeight = imgContainer.getBoundingClientRect().height;
     const scrollByHeight = newHeight - initialHeight;
 
@@ -52,20 +56,19 @@ async function fetchAndRenderPhotos() {
       lightbox.refresh();
     }
 
-    if (imagesData.hits.length < limit) {
-      loaderEl.classList.add('is-hidden');
+    if (page >= totalPages || imagesData.hits.length < limit) {
+      loadMoreBtn.classList.add('is-hidden');
     } else {
-      loaderEl.classList.remove('is-hidden');
+      loadMoreBtn.classList.remove('is-hidden');
     }
 
-    loadMoreBtn.classList.remove('is-hidden');
+    loaderEl.classList.add('is-hidden');
   } catch (error) {
     iziToast.error({
       position: 'topRight',
       timeout: 2000,
       message: 'Sorry, something went wrong. Please try again!',
     });
-  } finally {
     loaderEl.classList.add('is-hidden');
     loadMoreBtn.classList.remove('is-hidden');
   }
@@ -94,14 +97,6 @@ async function onSearch(event) {
 
 async function onLoadMore() {
   page += 1;
-  const totalPages = Math.ceil(100 / limit);
-  if (page > totalPages) {
-    loadMoreBtn.classList.add('is-hidden');
-    return iziToast.error({
-      position: 'topRight',
-      message: "We're sorry, there are no more posts to load",
-    });
-  }
   loadMoreBtn.classList.add('is-hidden');
   loaderEl.classList.remove('is-hidden');
   await fetchAndRenderPhotos();
